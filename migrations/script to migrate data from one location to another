@@ -1,0 +1,29 @@
+https://avni.freshdesk.com/a/tickets/2105
+
+https://app.zenhub.com/workspaces/avni-5cf8e458bf08585333fd64ac/issues/avniproject/sewa-rural/184
+
+-- Script to migrate data from 'રાજપરા' to 'Rajpara Girls Ashram'
+
+select * from address_level where title = 'રાજપરા';
+-- 129219
+select * from address_level where title = 'Rajpara Girls Ashram';
+-- 130973
+
+set role adsr;
+update individual
+set address_id = 130973,
+    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_date_time = current_timestamp + interval '1 millisecond'
+where address_id = 129219;
+
+update program_enrolment
+set address_id = 130973,
+    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_date_time = current_timestamp + interval '1 millisecond'
+where address_id = 129219;
+
+update program_encounter
+set address_id = 130973,
+    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_date_time = current_timestamp + interval '1 millisecond'
+where address_id = 129219;

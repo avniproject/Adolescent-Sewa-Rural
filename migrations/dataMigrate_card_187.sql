@@ -95,4 +95,9 @@ set address_id = 130988,
 where address_id = 129220;--20
 
 
+update address_level
+set is_voided               = true,
+    last_modified_by_id     = (select id from users where username = 'taqi@adsr'),
+    last_modified_date_time = current_timestamp + interval '1 millisecond'
+where id in (129221, 130986, 129220);
 

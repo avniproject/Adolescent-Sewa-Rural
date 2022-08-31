@@ -11,21 +11,21 @@ from address_level where title='Amalzar Secondary';
 set role adsr;
 update individual
 set address_id = 130975,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129221;
+where address_id = 129221;------16
 
 update program_enrolment
 set address_id = 130975,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129221;
+where address_id = 129221;--16
 
 update program_encounter
 set address_id = 130975,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129221;
+where address_id = 129221;----39
 
 
 
@@ -45,21 +45,21 @@ from address_level where title='ધારોલી માધ્યમિક';
 set role adsr;
 update individual
 set address_id = 129240,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 130986;
+where address_id = 130986;--26
 
 update program_enrolment
 set address_id = 129240,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 130986;
+where address_id = 130986;---26
 
 update program_encounter
 set address_id = 129240,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 130986;
+where address_id = 130986;--56
 
 
 
@@ -78,21 +78,21 @@ from address_level where title='Ranipura Girls KGBV';
 set role adsr;
 update individual
 set address_id = 130988,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129220;
+where address_id = 129220;--11
 
 update program_enrolment
 set address_id = 130988,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129220;
+where address_id = 129220;--10
 
 update program_encounter
 set address_id = 130988,
-    last_modified_by_id = (select * from users where username = 'nupoork@adsr'),
+    last_modified_by_id = (select * from users where username = 'taqi@adsr'),
     last_modified_date_time = current_timestamp + interval '1 millisecond'
-where address_id = 129220;
+where address_id = 129220;--20
 
 
 

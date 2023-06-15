@@ -39,7 +39,7 @@ last_modified_by_id, created_date_time ,
  last_modified_date_time,address_id,
  individual_id,sync_concept_1_value,
  sync_concept_2_value,manual_update_history)
-select '{}'::jsonb, now() + interval '1 day',
+select '{}'::jsonb, now() + random() * interval '2 milliseconds',
  null, program_enrolment_id,
  uuid_generate_v4(), 0, 1343,
  'Annual Visit - Baseline', now() + interval '4 day', organisation_id ,

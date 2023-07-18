@@ -69,7 +69,7 @@ select * from concept where name = 'Do you have any addiction'; -- uuid = '8fc33
 
 select * from users where username = 'taqi@adsr'; -- id = 5327
 
--- Actual script to convert the single select coded concept to multi select coded concept
+-- Actual script to convert the single select coded concept to multi select coded concept for the question "Do you have any addiction"
 
 update program_encounter 
 set observations = observations || json_build_object('8fc337d4-9809-4de1-8cbc-611a40c07653',
@@ -77,6 +77,7 @@ set observations = observations || json_build_object('8fc337d4-9809-4de1-8cbc-61
     last_modified_by_id = 5327,
     last_modified_date_time = now()
 where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' is not null
+and (observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653')::text not like '[%'
 and encounter_type_id in (1343, 1349, 1344);
 
 ----- Script to edit the individuals who have selected the answer 'Both' for the question 'Do you have any addiction'.

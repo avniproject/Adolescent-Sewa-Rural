@@ -75,7 +75,7 @@ update program_encounter
 set observations = observations || json_build_object('8fc337d4-9809-4de1-8cbc-611a40c07653',
                                                      array [observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653'])::jsonb,
     last_modified_by_id = 5327,
-    last_modified_date_time = now()
+    last_modified_date_time = current_timestamp + ((id % 4000) * interval '1 millisecond')
 where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' is not null
 and (observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653')::text not like '[%'
 and encounter_type_id in (1343, 1349, 1344);
@@ -95,14 +95,14 @@ update program_encounter
 set observations = observations || json_build_object('8fc337d4-9809-4de1-8cbc-611a40c07653',
                                                      array ['ebe4b9f1-d007-4605-a952-42d51d2b8de1','99199654-0555-4734-ad62-46728bb16ec8'])::jsonb,
     last_modified_by_id = 5327,
-    last_modified_date_time = now()
-where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' = '47766246-d271-4058-adcc-b6a24189580a'
+    last_modified_date_time = current_timestamp + ((id % 4000) * interval '1 millisecond')
+where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' = '["47766246-d271-4058-adcc-b6a24189580a"]'
 and encounter_type_id in (1343, 1349, 1344);
 
 -- To verify if the changes were actually made, run the below query to verify
 
  select * from program_encounter pe 
-where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' = '47766246-d271-4058-adcc-b6a24189580a'
+where observations ->> '8fc337d4-9809-4de1-8cbc-611a40c07653' = '["47766246-d271-4058-adcc-b6a24189580a"]'
 and encounter_type_id in (1343, 1349, 1344)
 ;
 

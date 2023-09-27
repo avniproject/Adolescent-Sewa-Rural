@@ -33,6 +33,10 @@ from concept where name = 'Moderate anaemia';
 -- 830319d4-b616-4253-88ff-00ada2b3ff03
 -- 194089
 
+select *
+from concept where name = 'Haemoglobin';
+-- 0f283bcc-fa4c-4d98-93fd-cbf1729b770d
+-- 194015
 
 --1: Annual Visit - Baseline
 
@@ -42,22 +46,23 @@ from concept where name = 'Moderate anaemia';
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
--- add Anaemic status as Severe anaemia for Haemoglobin <= 8
+
+-- add Anaemic status as Severe anaemia for Haemoglobin < 8
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin <= 8'
+    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin < 8'
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]'  ;
 
 
@@ -66,24 +71,23 @@ where encounter_type_id = (select id from encounter_type where name = 'Annual Vi
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
--- add Anaemic status as Severe anaemia for Haemoglobin > 8 and < 11
+-- add Anaemic status as Severe anaemia for Haemoglobin >= 8 and < 11
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["830319d4-b616-4253-88ff-00ada2b3ff03"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin > 8 and Haemoglobin < 11'
+    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin >= 8 and Haemoglobin < 11'
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Baseline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["830319d4-b616-4253-88ff-00ada2b3ff03"]' ;
-
 
 
 --2: Annual Visit - Endline
@@ -94,22 +98,22 @@ where encounter_type_id = (select id from encounter_type where name = 'Annual Vi
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
--- add Anaemic status as Severe anaemia for Haemoglobin <= 8
+-- add Anaemic status as Severe anaemia for Haemoglobin < 8
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin <= 8'
+    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin < 8'
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]'  ;
 
 
@@ -118,22 +122,22 @@ where encounter_type_id = (select id from encounter_type where name = 'Annual Vi
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
--- add Anaemic status as Severe anaemia for Haemoglobin > 8 and < 11
+-- add Anaemic status as Severe anaemia for Haemoglobin >= 8 and < 11
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["830319d4-b616-4253-88ff-00ada2b3ff03"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin > 8 and Haemoglobin < 11'
+    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin >= 8 and Haemoglobin < 11'
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Annual Visit - Endline')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["830319d4-b616-4253-88ff-00ada2b3ff03"]' ;
 
 
@@ -145,22 +149,22 @@ where encounter_type_id = (select id from encounter_type where name = 'Annual Vi
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
--- add Anaemic status as Severe anaemia for Haemoglobin <= 8
+-- add Anaemic status as Severe anaemia for Haemoglobin < 8
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin <= 8'
+    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin < 8'
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]'  ;
 
 
@@ -169,22 +173,22 @@ where encounter_type_id = (select id from encounter_type where name = 'Severe An
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
--- add Anaemic status as Severe anaemia for Haemoglobin > 8 and < 11
+-- add Anaemic status as Severe anaemia for Haemoglobin >= 8 and < 11
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["830319d4-b616-4253-88ff-00ada2b3ff03"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin > 8 and Haemoglobin < 11'
+    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin >= 8 and Haemoglobin < 11'
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Severe Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["830319d4-b616-4253-88ff-00ada2b3ff03"]' ;
 
 
@@ -196,22 +200,22 @@ where encounter_type_id = (select id from encounter_type where name = 'Severe An
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
--- add Anaemic status as Severe anaemia for Haemoglobin <= 8
+-- add Anaemic status as Severe anaemia for Haemoglobin < 8
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin <= 8'
+    manual_update_history = 'set Anaemic status as Severe anaemia for Haemoglobin < 8'
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric <= 8
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 8
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["1f92d18a-2c91-4421-8c41-2cc56f799c6d"]'  ;
 
 
@@ -220,21 +224,20 @@ where encounter_type_id = (select id from encounter_type where name = 'Moderate 
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
--- add Anaemic status as Severe anaemia for Haemoglobin > 8 and < 11
+-- add Anaemic status as Severe anaemia for Haemoglobin >= 8 and < 11
 update program_encounter
 set observations = observations || '{"d304f306-deca-4418-a9a5-27b04e083623": ["830319d4-b616-4253-88ff-00ada2b3ff03"]}',
     last_modified_date_time = current_timestamp + ((random() * 10 + 1) * interval '1 millisecond'),
-    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin > 8 and Haemoglobin < 11'
+    manual_update_history = 'set Anaemic status as moderate anaemia for Haemoglobin >= 8 and Haemoglobin < 11'
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11;
 
 
 -- verification query after update
 select count(*)
 from program_encounter
 where encounter_type_id = (select id from encounter_type where name = 'Moderate Anemia Follow-up')
-  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric > 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
+  and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric >= 8 and (observations->>'0f283bcc-fa4c-4d98-93fd-cbf1729b770d')::numeric < 11
   and observations->>'d304f306-deca-4418-a9a5-27b04e083623' = '["830319d4-b616-4253-88ff-00ada2b3ff03"]' ;
-

@@ -19,11 +19,11 @@ WITH baseline_encounters AS (
 UPDATE public.program_enrolment AS enrol
 SET observations = enrol.observations || jsonb_build_object('67b7a434-fdc7-44b6-89e7-b4755afd0bc3', enc.obs -> '2424293e-2466-4122-970f-716f3019ad55'), 
     last_modified_date_time = current_timestamp + ((enrol.id % 1000) * interval '1 millisecond'),
-    last_modified_by_id = 10366;
+    last_modified_by_id = 10366,
+    manual_update_history = manual_update_history || ', Updating the program decision concept Current Standard for old data as per #24 card'
 FROM baseline_encounters AS enc
 WHERE enc.program_enrolment_id = enrol.id
     AND enc.visit_number = 1
-    AND enrol.organisation_id = (SELECT id FROM public.organisation o WHERE o.name = 'Adolescent Sewa Rural UAT' LIMIT 1)
-    AND enrol.program_id = (SELECT id FROM public."program" prgrm WHERE prgrm.name = 'Adolescent')
+    AND enrol.program_id = 975
     AND (enc.obs -> '9705f6ad-50e1-4179-aa60-922014d7cc3c')::TEXT = '"995cfaee-5598-4293-addc-dcb1da5dbcd3"'
     AND enrol.observations -> '67b7a434-fdc7-44b6-89e7-b4755afd0bc3' is null;

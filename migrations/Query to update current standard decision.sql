@@ -33,3 +33,34 @@ FROM baseline_encounters AS enc
 WHERE enc.program_enrolment_id = enrol.id
     AND enc.visit_number = 1
     AND enrol.program_id = 975;
+
+
+
+
+
+
+
+----------------------- On Endline
+
+set role adsruat;
+
+WITH endline_encounters AS (
+    SELECT 
+        id,
+        program_enrolment_id,
+        observations obs,
+        ROW_NUMBER() OVER (PARTITION BY pe.individual_id ORDER BY pe.encounter_date_time DESC NULLS LAST) AS visit_number
+    FROM program_encounter pe 
+    WHERE pe.encounter_type_id = (SELECT id FROM encounter_type et WHERE et.name = 'Annual Visit - Endline' AND et.is_voided = false)
+        AND pe.encounter_date_time IS NOT NULL 
+        and (pe.observations -> '9705f6ad-50e1-4179-aa60-922014d7cc3c')::TEXT = '"fb1080b4-d1ec-4c87-a10d-3838ba9abc5b"'
+)
+UPDATE public.program_enrolment AS enrol
+SET observations = enrol.observations || jsonb_build_object('67b7a434-fdc7-44b6-89e7-b4755afd0bc3', '"fb1080b4-d1ec-4c87-a10d-3838ba9abc5b"'),
+    last_modified_date_time = current_timestamp + ((enrol.id % 1000) * interval '1 millisecond'),
+    last_modified_by_id = 10366,
+    manual_update_history = manual_update_history || ', Updating the program decision concept Current Standard for old data as per #24 card'
+FROM endline_encounters AS enc
+WHERE enc.program_enrolment_id = enrol.id
+    AND enc.visit_number = 1
+    AND enrol.program_id = 975;

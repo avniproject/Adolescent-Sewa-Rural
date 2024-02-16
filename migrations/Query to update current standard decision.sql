@@ -3,6 +3,7 @@ set role adsruat;
 --To update the current standard (which is the decision concept triggered from the 'Annual Visit - Baseline' program encounter), 
 --we retrieve the latest details from the 'In which standard he/she is studying?' question in the 'Annual Visit - Baseline' program encounter and 
 --then update the 'Current Standard' in the decision encounter.
+--We are taking the dropout details from the Baseline and Endline encounters. If a student has dropped out, then update the 'Current Standard' as 'Dropped out'.
 
 -- If you intend to make changes in the production environment, please modify the program id and last modified by id.
    

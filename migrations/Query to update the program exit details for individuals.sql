@@ -3,7 +3,7 @@ set role adsruat;
 -- Via script, marking all the program enrollments under the following locations as 'Exited'. This involves adding the program exit date (01-01-2024) and
 -- exit observations as 'Reason for exit': 'Change of school out of intervention area'.
 
--- The program enrollments for the following schools need to be exited: 'Rajpardi Kanya Primary,' 'Jhagadiya branch primary', 'Zagadiya Kumar Primary', 'Ranipura P.S.' and 'Limbodara Primary'.
+-- The program enrollments for the following schools need to be exited: 'Rajpardi Kanya Primary', 'Jhagadiya branch primary', 'Zagadiya Kumar Primary', 'Ranipura P.S.', 'Limbodara Primary'.
 
 -- If you intend to make changes in the production environment, please modify the address level type id and last modified by id.
    

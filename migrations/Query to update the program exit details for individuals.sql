@@ -18,7 +18,7 @@ set
 	last_modified_date_time = '2024-01-01'::timestamp + ((enrl.id % 1000) * interval '1 millisecond'),
 	program_exit_date_time = '2024-01-01'::timestamp + ((enrl.id % 1000) * interval '1 millisecond'),
 	last_modified_by_id = 10365,
-	manual_update_history = append_manual_update_history(enrl.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #23 card')
+	manual_update_history = append_manual_update_history(enrl.manual_update_history, ' Exiting from the program as per #24 card')
 from
 	public.individual i
 left join adsr.address a on
@@ -41,7 +41,7 @@ select
 	a."School" as "School",
 	enrl.id as enrl_id,
 	'2024-01-01'::timestamp + ((enrl.id % 1000) * interval '1 millisecond') as time,
-	append_manual_update_history(enrl.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #23 card') as history,
+	append_manual_update_history(enrl.manual_update_history, ' Exiting from the program as per #24 card') as history,
 	enrl.program_exit_observations
 from
 	public.program_enrolment enrl

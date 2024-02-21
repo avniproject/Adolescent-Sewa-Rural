@@ -1,4 +1,4 @@
-set role adsruat;
+set role adsr;
 
 --To update the current standard (which is the decision concept triggered from the 'Annual Visit - Baseline' program encounter), 
 --we retrieve the latest details from the 'In which standard he/she is studying?' question in the 'Annual Visit - Baseline' program encounter and 
@@ -52,17 +52,17 @@ SET observations =
         ELSE enrol.observations
     END,
     last_modified_date_time = current_timestamp + ((enrol.id % 1000) * interval '1 millisecond'),
-    last_modified_by_id = 10366,
-    manual_update_history = manual_update_history || ', Updating the program decision concept Current Standard for old data as per #24 card'
+    last_modified_by_id = 10365,
+    manual_update_history = append_manual_update_history(enrol.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #24 card')
 FROM annual_visits AS enc
 WHERE enc.program_enrolment_id = enrol.id
     AND enc.visit_number = 1
-    AND enrol.program_id = 975;
+    AND enrol.program_id = 299;
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 --Select Query
-set role adsruat;
+set role adsr;
 with annual_visits_base as(
 	SELECT 
 	    id,
@@ -108,9 +108,9 @@ SELECT
         ELSE 'Unknown'
     END AS updated_observations,
     current_timestamp + ((enrol.id % 1000) * interval '1 millisecond') AS last_modified_date_time,
-    10366 AS last_modified_by_id,
-    manual_update_history || ', Updating the program decision concept Current Standard for old data as per #24 card' AS updated_manual_history
+    10365 AS last_modified_by_id,
+    append_manual_update_history(enrol.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #24 card') AS updated_manual_history
 FROM public.program_enrolment AS enrol
 JOIN annual_visits AS enc ON enc.program_enrolment_id = enrol.id
 WHERE enc.visit_number = 1
-    AND enrol.program_id = 975;
+    AND enrol.program_id = 299;

@@ -17,9 +17,10 @@ with annual_visits_base as(
 	    program_enrolment_id,
 	    encounter_date_time,
 	    observations obs
-	FROM program_encounter pe 
-	WHERE pe.encounter_type_id = (SELECT id FROM encounter_type et WHERE et.name = 'Annual Visit - Endline' AND et.is_voided = false)
+	FROM public.program_encounter pe 
+	WHERE pe.encounter_type_id = (SELECT id FROM public.encounter_type et WHERE et.name = 'Annual Visit - Endline' AND et.is_voided = false)
 	    AND pe.encounter_date_time IS NOT NULL 
+	    AND pe.observations -> '9705f6ad-50e1-4179-aa60-922014d7cc3c'::text = '"fb1080b4-d1ec-4c87-a10d-3838ba9abc5b"'
 	union all 
 	SELECT 
 	    id,
@@ -27,8 +28,8 @@ with annual_visits_base as(
 	    program_enrolment_id,
 	    encounter_date_time,
 	    observations obs
-	FROM program_encounter pe 
-	WHERE pe.encounter_type_id = (SELECT id FROM encounter_type et WHERE et.name = 'Annual Visit - Baseline' AND et.is_voided = false)
+	FROM public.program_encounter pe 
+	WHERE pe.encounter_type_id = (SELECT id FROM public.encounter_type et WHERE et.name = 'Annual Visit - Baseline' AND et.is_voided = false)
 	    AND pe.encounter_date_time IS NOT NULL
 ),
 annual_visits as(
@@ -52,7 +53,7 @@ SET observations =
         ELSE enrol.observations
     END,
     last_modified_date_time = current_timestamp + ((enrol.id % 1000) * interval '1 millisecond'),
-    last_modified_by_id = 10365,
+    last_modified_by_id = 5327,
     manual_update_history = append_manual_update_history(enrol.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #24 card')
 FROM annual_visits AS enc
 WHERE enc.program_enrolment_id = enrol.id
@@ -62,7 +63,6 @@ WHERE enc.program_enrolment_id = enrol.id
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 --Select Query
-set role adsr;
 with annual_visits_base as(
 	SELECT 
 	    id,
@@ -70,9 +70,10 @@ with annual_visits_base as(
 	    program_enrolment_id,
 	    encounter_date_time,
 	    observations obs
-	FROM program_encounter pe 
-	WHERE pe.encounter_type_id = (SELECT id FROM encounter_type et WHERE et.name = 'Annual Visit - Endline' AND et.is_voided = false)
-	    AND pe.encounter_date_time IS NOT NULL
+	FROM public.program_encounter pe 
+	WHERE pe.encounter_type_id = (SELECT id FROM public.encounter_type et WHERE et.name = 'Annual Visit - Endline' AND et.is_voided = false)
+	    AND pe.encounter_date_time IS NOT null
+	    AND pe.observations -> '9705f6ad-50e1-4179-aa60-922014d7cc3c'::text = '"fb1080b4-d1ec-4c87-a10d-3838ba9abc5b"'
 	union all 
 	SELECT 
 	    id,
@@ -80,9 +81,9 @@ with annual_visits_base as(
 	    program_enrolment_id,
 	    encounter_date_time,
 	    observations obs
-	FROM program_encounter pe 
-	WHERE pe.encounter_type_id = (SELECT id FROM encounter_type et WHERE et.name = 'Annual Visit - Baseline' AND et.is_voided = false)
-	    AND pe.encounter_date_time IS NOT NULL
+	FROM public.program_encounter pe 
+	WHERE pe.encounter_type_id = (SELECT id FROM public.encounter_type et WHERE et.name = 'Annual Visit - Baseline' AND et.is_voided = false)
+	    AND pe.encounter_date_time IS NOT null
 ),
 annual_visits as(
 	SELECT 
@@ -98,6 +99,7 @@ SELECT
     enrol.id AS enrolment_id,
     enc.id,
     enc.individual_id,
+ 	enrol.observations as enrol_obs, -- It will be empty
     (enc.obs -> '9705f6ad-50e1-4179-aa60-922014d7cc3c')::text as obs,
     CASE 
 	    WHEN (enc.obs -> '9705f6ad-50e1-4179-aa60-922014d7cc3c')::TEXT = '"fb1080b4-d1ec-4c87-a10d-3838ba9abc5b"' OR 
@@ -108,9 +110,9 @@ SELECT
         ELSE 'Unknown'
     END AS updated_observations,
     current_timestamp + ((enrol.id % 1000) * interval '1 millisecond') AS last_modified_date_time,
-    10365 AS last_modified_by_id,
+    5327 AS last_modified_by_id,
     append_manual_update_history(enrol.manual_update_history, ' Updating the program decision concept Current Standard for old data as per #24 card') AS updated_manual_history
 FROM public.program_enrolment AS enrol
 JOIN annual_visits AS enc ON enc.program_enrolment_id = enrol.id
 WHERE enc.visit_number = 1
-    AND enrol.program_id = 299;
+    AND enrol.program_id = 299; -- 5674

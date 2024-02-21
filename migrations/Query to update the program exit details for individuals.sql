@@ -1,4 +1,4 @@
-set role adsruat;
+set role adsr;
 
 -- Via script, marking all the program enrollments under the following locations as 'Exited'. This involves adding the program exit date (01-01-2024) and
 -- exit observations as 'Reason for exit': 'Change of school out of intervention area'.
